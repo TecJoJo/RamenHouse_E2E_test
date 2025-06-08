@@ -4,6 +4,12 @@ describe("Create Meal API", () => {
     beforeEach(() => loginViaAPI());
 
     it("Create a meal in the RamenHouse content management system using API", () => {
-        createMealViaAPI();
+        createMealViaAPI({
+            name: "MealCreateViaAPIRequest",
+            isFeatured: false,
+            BasePrice: 100,
+            Discount: 0.3,
+            description: "This is a test meal created by Cypress using API",
+        }, "imgs/under_construction.jpg");
     });
 });

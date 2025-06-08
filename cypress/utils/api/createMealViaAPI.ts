@@ -1,18 +1,45 @@
-export function createMealViaAPI() {
-    const url = Cypress.env().baseUrl;
+import { constructFormData } from "../constructFormData";
 
-    cy.request({
-        method: "POST",
-        url: `${url}admin\/mealcreate`,
-        form: true,
-        body: {
-            name: "MealCreateViaAPIRequest",
-            isFeatured: false,
-            BasePrice: 100,
-            Discount: 0.3,
-            description: "This is a test meal created by Cypress using API",
-        },
-    }).then((postResponse) => {
-        expect(postResponse.status).to.eq(200);
-    });
+interface MealCreateDTO {
+    name: string;
+    isFeatured: boolean;
+    BasePrice: number;
+    Discount: number;
+    description: string;
 }
+export function createMealViaAPI(mealRequest: MealCreateDTO, imgPath: string = "imgs/under_construction.jpg") {
+
+    const url = Cypress.env().baseUrl;
+    cy.fixture(imgPath, "binary").then((imgBlobString) => {
+        const imgName = imgPath.split("/").pop()
+        const formData = constructFormData(
+            {
+                name: mealRequest.name,
+                isFeatured: mealRequest.isFeatured,
+                BasePrice: mealRequest.BasePrice,
+                Discount: mealRequest.Discount,
+                description: mealRequest.description,
+            },
+            imgName,
+            imgBlobString
+        );
+        cy.request({
+            method: "POST",
+            url: `${url}admin\/mealcreate`,
+            headers: {
+                accept: "application/json",
+                "Content-Type": "multipart/form-data"
+
+            },
+            body: formData
+        }).then((postResponse) => {
+            expect(postResponse.status).to.eq(200);
+        });
+    })
+
+
+
+
+
+}
+
