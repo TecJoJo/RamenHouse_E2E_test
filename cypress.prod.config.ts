@@ -1,6 +1,6 @@
-const { defineConfig } = require("cypress");
+import { defineConfig } from "cypress";
 
-module.exports = defineConfig({
+export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
@@ -8,7 +8,8 @@ module.exports = defineConfig({
     experimentalStudio: true,
   },
   env: {
-    baseUrl: "https://localhost:7066/",
+    baseUrl:
+      "https://ramenhouse-fcfudqg8eya5ehf5.swedencentral-01.azurewebsites.net/",
     testUserEmail: "cypress@email.com",
     testUserPassword: "cypress123",
   },

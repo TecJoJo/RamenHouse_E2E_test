@@ -9,13 +9,15 @@ describe("Edit Meal", () => {
 
         function editCell(stringBefore, stringAfter) {
             cy.get('[gui-structure-row=""]')
-                .filter((_, el) => el.innerText.includes(stringBefore))
+                .filter((_, el) => el.innerText.includes(stringBefore)).last()
                 .within(() => {
                     cy.contains(stringBefore).click({ force: true });
                 });
 
-            cy.focused().clear().type(stringAfter, { force: true });
-
+            cy.focused().clear().type(`${stringAfter}{enter}`, { force: true });
+            cy.reload();
+            cy.wait(1000);
+            cy.contains(stringAfter).should("exist");
         }
 
         const name = "test meal to be edited";
@@ -41,6 +43,23 @@ describe("Edit Meal", () => {
 
         // edit the meal's name
         cy.then(() => editCell(name, "[Edited] " + name));
+        // edit the meal's description
+        cy.then(() => editCell(description, "[Edited] " + description));
+        // edit the meal's base price
+        cy.then(() => editCell(basePrice.toString(), (basePrice + 5).toFixed(1)));
+        // edit the meal's discount
+        cy.then(() => editCell(discount.toString(), (discount + 0.1).toFixed(1)));
+        // edit the meal's isFeatured
+        cy.then(() => editCell(isFeatured.toString(), (!isFeatured).toString()));
+
+
+        //delete the meal being edited
+        cy.get('[gui-structure-row=""]')
+            .filter((_, el) => el.innerText.includes("[Edited] " + name)).last()
+            .within(() => {
+                cy.get('[onclick*="deleteMeal"]').click({ force: true });
+            });
+
 
 
 
