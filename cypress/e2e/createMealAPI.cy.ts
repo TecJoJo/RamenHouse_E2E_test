@@ -10,6 +10,6 @@ describe("Create Meal API", () => {
             BasePrice: 100,
             Discount: 0.3,
             description: "This is a test meal created by Cypress using API",
-        }, "imgs/under_construction.jpg");
+        });
     });
 });

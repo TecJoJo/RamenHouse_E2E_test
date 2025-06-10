@@ -9,7 +9,7 @@ describe("Delete meal", () => {
             BasePrice: 999,
             Discount: 1,
             description: "This is a test meal that will be deleted",
-        }, "imgs/under_construction.jpg");
+        });
         cy.visit(Cypress.env("baseUrl") + "admin");
         cy.wait(1000);
         cy.get('[gui-structure-row=""]')

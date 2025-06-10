@@ -1,24 +1,37 @@
 import { constructFormData } from "../constructFormData";
 
-interface MealCreateDTO {
+export interface IMealCreation {
     name: string;
-    isFeatured: boolean;
+    isFeatured?: boolean;
     BasePrice: number;
-    Discount: number;
-    description: string;
+    Discount?: number;
+    description?: string;
+    imgPath?: string;
 }
-export function createMealViaAPI(mealRequest: MealCreateDTO, imgPath: string = "imgs/under_construction.jpg") {
+
+const defaultMealCreation: IMealCreation = {
+    name: "MealCreateViaAPIRequest",
+    isFeatured: false,
+    BasePrice: 100,
+    Discount: 1,
+    description: "This is a test meal created by Cypress using API",
+    imgPath: "imgs/under_construction.jpg"
+};
+
+
+export function createMealViaAPI(mealRequest: IMealCreation) {
+    const mergedMealRequest = { ...defaultMealCreation, ...mealRequest };
 
     const url = Cypress.env().baseUrl;
-    cy.fixture(imgPath, "binary").then((imgBlobString) => {
-        const imgName = imgPath.split("/").pop()
+    cy.fixture(mergedMealRequest.imgPath, "binary").then((imgBlobString) => {
+        const imgName = mergedMealRequest.imgPath.split("/").pop()
         const formData = constructFormData(
             {
-                name: mealRequest.name,
-                isFeatured: mealRequest.isFeatured,
-                BasePrice: mealRequest.BasePrice,
-                Discount: mealRequest.Discount,
-                description: mealRequest.description,
+                name: mergedMealRequest.name,
+                isFeatured: mergedMealRequest.isFeatured,
+                BasePrice: mergedMealRequest.BasePrice,
+                Discount: mergedMealRequest.Discount,
+                description: mergedMealRequest.description,
             },
             imgName,
             imgBlobString

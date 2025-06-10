@@ -22,9 +22,8 @@ see this:https://docs.cypress.io/app/tooling/typescript-support
     "target": "es5",
     "lib": ["es5", "dom"],
     "sourceMap": true,
-    "types": ["cypress", "node"]
+    "types": ["cypress", "node"],
+    "outDir": "dist"
   },
-  "include": ["**/*.ts"]
+  "include": ["cypress/**/*.ts"]
 }
-
-

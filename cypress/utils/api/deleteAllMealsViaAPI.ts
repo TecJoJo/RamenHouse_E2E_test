@@ -16,6 +16,6 @@ export const deleteAllMealsViaAPI = () => {
 
 
         expect(response.status).to.eq(200);
-        expect(response.body).to.have.property('message', 'Database cleaned successfully');
+        expect(response.body).to.have.property('message', 'All meals deleted successfully');
     });
 };
