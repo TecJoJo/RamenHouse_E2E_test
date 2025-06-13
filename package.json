@@ -6,7 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "open:prod": "npx cypress open --config-file cypress.prod.config.ts",
     "open": "npx cypress open --config-file cypress.dev.config.ts",
-    "tsc": "tsc --project tsconfig.json"
+    "tsc": "tsc --project tsconfig.json",
+    "run:prod": "npx cypress run --config-file cypress.prod.config.ts",
+    "run": "npx cypress run --config-file cypress.dev.config.ts"
   },
   "repository": {
     "type": "git",
