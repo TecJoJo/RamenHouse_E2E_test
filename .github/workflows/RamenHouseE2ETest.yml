@@ -1,12 +1,23 @@
-name: End-to-end tests
+name: RamenHouse E2E tests
+
 on: push
+
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      # Install npm dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: npx cypress run --config-file cypress.prod.config.ts
-        uses: cypress-io/github-action@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Cypress with production config
+        run: npm run run:prod
+
