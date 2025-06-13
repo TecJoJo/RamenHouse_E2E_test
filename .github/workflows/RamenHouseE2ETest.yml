@@ -1,6 +1,8 @@
 name: RamenHouse E2E tests
 
-on: push
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   cypress-run:
@@ -13,11 +15,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install dependencies
         run: npm ci
 
       - name: Run Cypress with production config
         run: npm run run:prod
-
