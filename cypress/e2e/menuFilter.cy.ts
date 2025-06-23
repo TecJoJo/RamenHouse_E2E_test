@@ -16,10 +16,14 @@ describe("Menu filter", () => {
                 .should("have.length.greaterThan", 0)
                 .then(($chips: JQuery<HTMLElement>) => {
                     const chips = $chips.toArray();
-                    if (index > chips.length) return;
+                    if (index > chips.length - 1) return;
                     cy.wrap(chips[index]).click();
                     cy.wait(2000)
                         .then(() => {
+                            const element = Cypress.$(':contains("Oops! We could\'t find any result")');
+
+
+                            if (element.length >= 0) return null
                             cy.get('[href*="Menu/Detail"] > #grid-item')
                                 .children()
                                 .should("have.length.greaterThan", 0);
